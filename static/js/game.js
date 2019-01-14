@@ -7,7 +7,7 @@ function fillDeck() {
         for (let value of values) {
 
             //etc
-            let card = {suit: suit, value: value, image: `${value}_of_${suit}.png`};
+            let card = {suit: suit, value: value, image: `${value}_of_${suit}.png`.toLowerCase()};
             for (let i = 0; i < 1; i++) {
                 deck.push(card);
             }
@@ -29,19 +29,31 @@ function shuffle(a) {
     return a;
 }
 
-function dealCard(deck){
-    let playerDeck = [];
-    let pickedCard = deck.pop();
+function dealCard(deck, hand){
+    let card = deck.pop();
+    hand.push(card);
+}
 
-    playerDeck.push(pickedCard);
-    return playerDeck;
+
+function showHand(hand){
+    let userCards = document.getElementById('player-deck');
+    let playerHand = document.querySelectorAll('.player-card');
+    console.log(playerHand);
+    console.log(hand);
+    for (let i = 0; i < playerHand.length; i++){
+            let image = hand[i].image;
+            playerHand[i].innerHTML = `'<img src="/static/img/cards/${image}"/>'`;
+    }
 }
 
 function game(){
+    let hand = [];
     let deck = fillDeck();
     shuffle(deck);
-    let card = dealCard(deck);
-    console.log(card);
+    for (let i=0; i < 5; i++){
+        dealCard(deck, hand);
+    }
+    showHand(hand);
 }
 
 game();

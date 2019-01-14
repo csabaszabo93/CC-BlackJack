@@ -3,5 +3,9 @@
     <script src="{{ url_for('static', filename='js/game.js') }}" defer></script>
 {% endblock %}
 {% block content %}
-    <div id="player-deck"></div>
+    <div id="player-deck">
+        {% for i in range(5)%}
+            <div class="player-card"></div>
+        {% endfor %}
+    </div>
 {% endblock %}
