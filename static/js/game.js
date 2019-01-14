@@ -14,6 +14,8 @@ function fillDeck() {
 
         }
     }
+
+    return deck;
 }
 
 function shuffle(a) {
@@ -27,10 +29,19 @@ function shuffle(a) {
     return a;
 }
 
-function dealCard(){
+function dealCard(deck){
     let playerDeck = [];
     let pickedCard = deck.pop();
 
     playerDeck.push(pickedCard);
-    console.log(playerDeck);
+    return playerDeck;
 }
+
+function game(){
+    let deck = fillDeck();
+    shuffle(deck);
+    let card = dealCard(deck);
+    console.log(card);
+}
+
+game();
