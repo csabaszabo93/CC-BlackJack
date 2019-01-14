@@ -28,7 +28,7 @@ function shuffle(a) {
 }
 
 function dealCard(){
-    let playerDeck = []
+    let playerDeck = [];
     let pickedCard = deck.pop();
 
     playerDeck.push(pickedCard);
