@@ -18,6 +18,7 @@ function fillDeck() {
     return deck;
 }
 
+
 function shuffle(a) {
     var j, x, i;
     for (i = a.length - 1; i > 0; i--) {
@@ -29,6 +30,7 @@ function shuffle(a) {
     return a;
 }
 
+
 function dealCard(deck, hand){
     let card = deck.pop();
     hand.push(card);
@@ -38,19 +40,18 @@ function dealCard(deck, hand){
 function showHand(hand){
     let userCards = document.getElementById('player-deck');
     let playerHand = document.querySelectorAll('.player-card');
-    console.log(playerHand);
-    console.log(hand);
     for (let i = 0; i < playerHand.length; i++){
             let image = hand[i].image;
-            playerHand[i].innerHTML = `'<img src="/static/img/cards/${image}"/>'`;
+            playerHand[i].innerHTML = `'<img src="/static/img/cards/${image}" height="350"/>'`;
     }
 }
+
 
 function game(){
     let hand = [];
     let deck = fillDeck();
     shuffle(deck);
-    for (let i=0; i < 5; i++){
+    for (let i=0; i < 2; i++){
         dealCard(deck, hand);
     }
     showHand(hand);
