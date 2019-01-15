@@ -62,7 +62,7 @@ function dealerHand(hand){
 function checkValue(cards){
     let values = [];
     for (card of cards){
-        if (card.value === 'ace'){
+        if (card.value === 'Ace'){
             values.push(11);
         }
         else if (typeof card.value === 'string'){ // ace is considered a 10, needs to be a sep. condition.
@@ -74,6 +74,17 @@ function checkValue(cards){
     return values.reduce((a, b) => a + b, 0)
 }
 
+
+function checkNatural(hand) {
+    let value = checkValue(hand);
+    if (value === 21) {
+        setTimeout(function () {
+            alert("Natural Win - Fatality!");
+        }, 150);
+        return true;
+    }
+    return false;
+}
 
 function game(){
     let hitButton = document.getElementById('btn-hit');
@@ -94,14 +105,14 @@ function game(){
     sessionStorage["dealerHand"] = JSON.stringify(dealerCards);
     showHand(playerCards, '.player-card');
     dealerHand(dealerCards);
-    console.log(dealerCards);
 
-    let dealerValue = checkValue(dealerCards);
+    if (checkNatural(dealerCards)){
+        showHand(dealerCards, '.dealer-card');
+    }
+    if (checkNatural(playerCards)){
+        showHand(dealerCards, '.dealer-card');
+    }
 
-    //if (dealerValue < 17){    // IF PLAYERBUST
-      //  dealCard(deck, dealerCards);
-       // dealerHand(dealerCards, 3);
-   // }
     sessionStorage.setItem("deck", JSON.stringify(deck));
 }
 
@@ -151,4 +162,5 @@ function evaluateHands(playerHand, dealerHand){
         setTimeout(function () { alert("Draw!"); }, 150);
     } else { setTimeout(function () { alert("Player Died"); }, 150);}
 }
+
 game();
