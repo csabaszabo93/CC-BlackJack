@@ -34,13 +34,12 @@ function dealCard(deck, hand){
 }
 
 
-function showHand(hand){
-    let playerHand = document.querySelectorAll('.player-card');
+function showHand(hand, divClass){
+    let playerHand = document.querySelectorAll(divClass);
     for (let i = 0; i < hand.length; i++){
             let image = hand[i].image;
             playerHand[i].innerHTML = `<img src="/static/img/cards/${image}" height="120"/>`;
             playerHand[i].style.zIndex = `${i}`;
-            // playerHand[i].style.marginLeft = `${i * 2.5}%`;
     }
 }
 
@@ -76,6 +75,8 @@ function checkValue(cards){
 function game(){
     let hitButton = document.getElementById('btn-hit');
     hitButton.addEventListener("click", hit);
+    let standButton = document.getElementById('btn-stand');
+    standButton.addEventListener("click", stand);
     let playerCards = [];
     let dealerCards = [];
     let initDeck = fillDeck(); // fills deck with 312 cards
@@ -87,7 +88,8 @@ function game(){
         dealCard(deck, dealerCards);
     }
     sessionStorage["hand"] = JSON.stringify(playerCards);
-    showHand(playerCards);
+    sessionStorage["dealerHand"] = JSON.stringify(dealerCards);
+    showHand(playerCards, '.player-card');
     dealerHand(dealerCards);
     console.log(dealerCards);
 
@@ -107,7 +109,7 @@ function hit(event){
     sessionStorage["hand"] = JSON.stringify(hand);
     hand = JSON.parse(sessionStorage.getItem("hand"));
     console.log(hand);
-    showHand(hand,5);
+    showHand(hand, '.player-card');
     //BUST
     checkBust(hand);
 }
@@ -118,5 +120,28 @@ function checkBust(hand){
     if(value > 21){
         setTimeout(function() { alert("Busted"); }, 150);
     }
+}
+
+function stand(event){
+    deck = JSON.parse(sessionStorage.getItem("deck"));
+    playerCards = dealerCards = JSON.parse(sessionStorage.getItem("hand"));
+    dealerCards = JSON.parse(sessionStorage.getItem("dealerHand"));
+    if (checkValue(dealerCards) < 17) {
+        dealCard(deck, dealerCards);
+        dealerHand(dealerCards, 3);
+    }
+    showHand(dealerCards, '.dealer-card');
+    evaluateHands(playerCards, dealerCards);
+
+}
+
+function evaluateHands(playerHand, dealerHand){
+    let playerValue = checkValue(playerHand);
+    let dealerValue =  checkValue(dealerHand);
+    if (playerValue > 21){
+        setTimeout(function() { alert("Busted"); }, 150);
+    } else if (dealerValue > 21 || playerValue > dealerValue){
+        setTimeout(function () { alert("Player Wins"); }, 150);
+    } else { setTimeout(function () { alert("Player Died"); }, 150);}
 }
 game();
