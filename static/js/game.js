@@ -54,6 +54,8 @@ function dealerHand(hand){
         } else {
             dealerHand[i].innerHTML = `<img src="/static/img/cards/red_joker.png" height="120"/>`;
         }
+        dealerHand[i].style.zIndex = `${i}`;
+        dealerHand[i].style.marginLeft = `${i * 2.5}%`;
     }
 }
 
@@ -70,8 +72,6 @@ function game(){
     }
     showHand(playerCards);
     dealerHand(dealerCards);
-
-
 }
 
 
