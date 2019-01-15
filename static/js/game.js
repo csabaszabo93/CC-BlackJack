@@ -62,7 +62,10 @@ function dealerHand(hand){
 function checkValue(cards){
     let values = [];
     for (card of cards){
-        if (typeof card.value === 'string'){ // ace is considered a 10, needs to be a sep. condition.
+        if (card.value === 'ace'){
+            values.push(11);
+        }
+        else if (typeof card.value === 'string'){ // ace is considered a 10, needs to be a sep. condition.
             values.push(10);
         } else {
             values.push(card.value);
@@ -126,10 +129,12 @@ function stand(event){
     deck = JSON.parse(sessionStorage.getItem("deck"));
     playerCards = dealerCards = JSON.parse(sessionStorage.getItem("hand"));
     dealerCards = JSON.parse(sessionStorage.getItem("dealerHand"));
-    if (checkValue(dealerCards) < 17) {
+
+    while (checkValue(dealerCards) < 17) {
         dealCard(deck, dealerCards);
         dealerHand(dealerCards, 3);
     }
+
     showHand(dealerCards, '.dealer-card');
     evaluateHands(playerCards, dealerCards);
 
@@ -140,8 +145,10 @@ function evaluateHands(playerHand, dealerHand){
     let dealerValue =  checkValue(dealerHand);
     if (playerValue > 21){
         setTimeout(function() { alert("Busted"); }, 150);
-    } else if (dealerValue > 21 || playerValue > dealerValue){
-        setTimeout(function () { alert("Player Wins"); }, 150);
+    } else if (dealerValue > 21 || playerValue > dealerValue) {
+        setTimeout(function () {alert("Player Wins");}, 150);
+    } else if (playerValue === dealerValue) {
+        setTimeout(function () { alert("Draw!"); }, 150);
     } else { setTimeout(function () { alert("Player Died"); }, 150);}
 }
 game();
