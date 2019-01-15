@@ -30,8 +30,6 @@ function shuffle(a) {
 function dealCard(deck, hand){
     let card = deck.pop();
     hand.push(card);
-    sessionStorage["deck"] = JSON.stringify(deck);
-    sessionStorage["hand"] = JSON.stringify(hand);
 }
 
 
@@ -87,6 +85,7 @@ function game(){
         dealCard(deck, playerCards);
         dealCard(deck, dealerCards);
     }
+    sessionStorage["hand"] = JSON.stringify(playerCards);
     showHand(playerCards, 2);
     dealerHand(dealerCards, 2);
     console.log(dealerCards);
@@ -97,10 +96,12 @@ function game(){
         dealCard(deck, dealerCards);
         dealerHand(dealerCards, 3);
     }
+    sessionStorage.setItem("deck", JSON.stringify(deck));
 }
 
 function hit(event){
-    deck = JSON.parse(sessionStorage.getItem("deck"))
+    deck = JSON.parse(sessionStorage.getItem("deck"));
+    console.log(deck);
     hand = JSON.parse(sessionStorage.getItem("hand"));
     console.log(hand);
     dealCard(deck,hand);
