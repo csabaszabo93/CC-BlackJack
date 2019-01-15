@@ -91,6 +91,8 @@ function game(){
     hitButton.addEventListener("click", hit);
     let standButton = document.getElementById('btn-stand');
     standButton.addEventListener("click", stand);
+    let surrenderButton = document.getElementById('btn-surrender');
+    surrenderButton.addEventListener("click", surrender);
     let playerCards = [];
     let dealerCards = [];
     let initDeck = fillDeck(); // fills deck with 312 cards
@@ -151,6 +153,10 @@ function stand(event){
     showHand(dealerCards, '.dealer-card');
     evaluateHands(playerCards, dealerCards);
 
+}
+
+function surrender(event){
+    location.reload();
 }
 
 function evaluateHands(playerHand, dealerHand){
