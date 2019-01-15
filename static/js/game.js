@@ -29,13 +29,14 @@ function shuffle(a) {
 
 function dealCard(deck, hand){
     let card = deck.pop();
+    sessionStorage.setItem("deck", JSON.stringify(deck));
     hand.push(card);
 }
 
 
-function showHand(hand, handSize){
+function showHand(hand){
     let playerHand = document.querySelectorAll('.player-card');
-    for (let i = 0; i < handSize; i++){
+    for (let i = 0; i < hand.length; i++){
             let image = hand[i].image;
             playerHand[i].innerHTML = `<img src="/static/img/cards/${image}" height="120"/>`;
             playerHand[i].style.zIndex = `${i}`;
@@ -44,14 +45,14 @@ function showHand(hand, handSize){
 }
 
 
-function dealerHand(hand, handSize){
+function dealerHand(hand){
     let dealerHand = document.querySelectorAll('.dealer-card');
-    for (let i = 0; i < handSize; i++){
+    for (let i = 0; i < hand.length; i++){
         if (i !== 1){
             let image = hand[i].image;
             dealerHand[i].innerHTML = `<img src="/static/img/cards/${image}" height="120"/>`;
         } else {
-            dealerHand[i].innerHTML = `<img src="/static/img/cards/red_joker.png" height="120"/>`;
+            dealerHand[i].innerHTML = `<img src="/static/img/cards/cardback.png" height="120"/>`;
         }
         dealerHand[i].style.zIndex = `${i}`;
         dealerHand[i].style.marginLeft = `${i * 2.5}%`;
@@ -71,6 +72,7 @@ function checkValue(cards){
     return values.reduce((a, b) => a + b, 0)
 }
 
+
 function game(){
     let hitButton = document.getElementById('btn-hit');
     hitButton.addEventListener("click", hit);
@@ -79,37 +81,42 @@ function game(){
     let initDeck = fillDeck(); // fills deck with 312 cards
     shuffle(initDeck); // shuffles the deck
     let deck = initDeck.slice(0, 250); // using only the top 250 cards
-    sessionStorage.setItem("deck", JSON.stringify(deck));  // put deck into localStorage
     sessionStorage.setItem("hand", JSON.stringify(playerCards));
     for (let i=0; i < 2; i++){
         dealCard(deck, playerCards);
         dealCard(deck, dealerCards);
     }
     sessionStorage["hand"] = JSON.stringify(playerCards);
-    showHand(playerCards, 2);
-    dealerHand(dealerCards, 2);
+    showHand(playerCards);
+    dealerHand(dealerCards);
     console.log(dealerCards);
 
     let dealerValue = checkValue(dealerCards);
 
-    if (dealerValue < 17){
-        dealCard(deck, dealerCards);
-        dealerHand(dealerCards, 3);
-    }
+    //if (dealerValue < 17){    // IF PLAYERBUST
+      //  dealCard(deck, dealerCards);
+       // dealerHand(dealerCards, 3);
+   // }
     sessionStorage.setItem("deck", JSON.stringify(deck));
 }
 
 function hit(event){
     deck = JSON.parse(sessionStorage.getItem("deck"));
-    console.log(deck);
+    hand = JSON.parse(sessionStorage.getItem("hand"));
+    dealCard(deck,hand);
+    sessionStorage["hand"] = JSON.stringify(hand);
     hand = JSON.parse(sessionStorage.getItem("hand"));
     console.log(hand);
-    dealCard(deck,hand);
-
-    showHand(hand,3);
+    showHand(hand,5);
     //BUST
-
+    checkBust(hand);
 }
 
-
+function checkBust(hand){
+    hand = JSON.parse(sessionStorage.getItem("hand"));
+    let value = checkValue(hand);
+    if(value > 21){
+        setTimeout(function() { alert("Busted"); }, 150);
+    }
+}
 game();
