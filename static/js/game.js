@@ -37,11 +37,11 @@ function dealCard(deck, hand){
 
 function showHand(hand, handSize){
     let playerHand = document.querySelectorAll('.player-card');
-    for (let i = 0; i < 2; i++){
+    for (let i = 0; i < handSize; i++){
             let image = hand[i].image;
             playerHand[i].innerHTML = `<img src="/static/img/cards/${image}" height="120"/>`;
             playerHand[i].style.zIndex = `${i}`;
-            playerHand[i].style.marginLeft = `${i * 2.5}%`;
+            // playerHand[i].style.marginLeft = `${i * 2.5}%`;
     }
 }
 
@@ -82,12 +82,12 @@ function game(){
     shuffle(initDeck); // shuffles the deck
     let deck = initDeck.slice(0, 250); // using only the top 250 cards
     sessionStorage.setItem("deck", JSON.stringify(deck));  // put deck into localStorage
-    sessionStorage.setItem("hand",JSON.stringify(playerCards));
+    sessionStorage.setItem("hand", JSON.stringify(playerCards));
     for (let i=0; i < 2; i++){
         dealCard(deck, playerCards);
         dealCard(deck, dealerCards);
     }
-    showHand(playerCards);
+    showHand(playerCards, 2);
     dealerHand(dealerCards, 2);
     console.log(dealerCards);
 
@@ -102,8 +102,12 @@ function game(){
 function hit(event){
     deck = JSON.parse(sessionStorage.getItem("deck"))
     hand = JSON.parse(sessionStorage.getItem("hand"));
+    console.log(hand);
     dealCard(deck,hand);
-    showHand(hand);
+
+    showHand(hand,3);
+    //BUST
+
 }
 
 
