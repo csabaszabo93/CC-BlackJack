@@ -128,7 +128,7 @@ function hit(event){
     checkBust(hand);
 }
 
-function checkBust(hand){
+function checkBust(hand){ // check if player has 2 Aces at the beginning and bust them
     hand = JSON.parse(sessionStorage.getItem("hand"));
     let value = checkValue(hand);
     if(value > 21){
@@ -157,10 +157,10 @@ function evaluateHands(playerHand, dealerHand){
     if (playerValue > 21){
         setTimeout(function() { alert("Busted"); }, 150);
     } else if (dealerValue > 21 || playerValue > dealerValue) {
-        setTimeout(function () {alert("Player Wins");}, 150);
+        setTimeout(function () {alert(`"Computer: ${dealerValue} || Player: ${playerValue} - Player Wins"`);}, 150);
     } else if (playerValue === dealerValue) {
         setTimeout(function () { alert("Draw!"); }, 150);
-    } else { setTimeout(function () { alert("Player Died"); }, 150);}
+    } else { setTimeout(function () { alert(`"Computer: ${dealerValue} || Player: ${playerValue} - Player Died"`); }, 150); }
 }
 
 game();
