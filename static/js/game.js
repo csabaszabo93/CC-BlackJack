@@ -64,8 +64,7 @@ function checkValue(cards){
     for (card of cards){
         if (card.value === 'Ace'){
             values.push(11);
-        }
-        else if (typeof card.value === 'string'){ // ace is considered a 10, needs to be a sep. condition.
+        } else if (typeof card.value === 'string'){
             values.push(10);
         } else {
             values.push(card.value);
@@ -128,7 +127,6 @@ function hit(event){
     hand = JSON.parse(sessionStorage.getItem("hand"));
     console.log(hand);
     showHand(hand, '.player-card');
-    //BUST
     checkBust(hand);
 }
 
@@ -167,7 +165,7 @@ function evaluateHands(playerHand, dealerHand){
     } else if (dealerValue > 21 || playerValue > dealerValue) {
         setTimeout(function () {alert(`"Computer: ${dealerValue} || Player: ${playerValue} - Player Wins"`); location.reload();}, 150);
     } else if (playerValue === dealerValue) {
-        setTimeout(function () { alert("Draw!"); }, 150);
+        setTimeout(function () { alert("Draw!"); location.reload();}, 150);
     } else { setTimeout(function () { alert(`"Computer: ${dealerValue} || Player: ${playerValue} - Player Died"`); location.reload(); }, 150); }
 }
 
