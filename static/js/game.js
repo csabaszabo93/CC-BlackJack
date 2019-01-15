@@ -33,9 +33,9 @@ function dealCard(deck, hand){
 }
 
 
-function showHand(hand){
+function showHand(hand, handSize){
     let playerHand = document.querySelectorAll('.player-card');
-    for (let i = 0; i < 5; i++){
+    for (let i = 0; i < 2; i++){
             let image = hand[i].image;
             playerHand[i].innerHTML = `<img src="/static/img/cards/${image}" height="120"/>`;
             playerHand[i].style.zIndex = `${i}`;
@@ -44,10 +44,9 @@ function showHand(hand){
 }
 
 
-function dealerHand(hand){
+function dealerHand(hand, handSize){
     let dealerHand = document.querySelectorAll('.dealer-card');
-    console.log(dealerHand);
-    for (let i = 0; i < 5; i++){
+    for (let i = 0; i < handSize; i++){
         if (i !== 1){
             let image = hand[i].image;
             dealerHand[i].innerHTML = `<img src="/static/img/cards/${image}" height="120"/>`;
@@ -60,18 +59,40 @@ function dealerHand(hand){
 }
 
 
+function checkValue(cards){
+    let values = [];
+    for (card of cards){
+        if (typeof card.value === 'string'){ // ace is considered a 10, needs to be a sep. condition.
+            values.push(10);
+        } else {
+            values.push(card.value);
+        }
+    }
+    return values.reduce((a, b) => a + b, 0)
+}
+
 function game(){
     let playerCards = [];
     let dealerCards = [];
     let initDeck = fillDeck(); // fills deck with 312 cards
     shuffle(initDeck); // shuffles the deck
     let deck = initDeck.slice(0, 250); // using only the top 250 cards
-    for (let i=0; i < 5; i++){
+    for (let i=0; i < 2; i++){
         dealCard(deck, playerCards);
         dealCard(deck, dealerCards);
     }
     showHand(playerCards);
-    dealerHand(dealerCards);
+    dealerHand(dealerCards, 2);
+    console.log(dealerCards);
+
+    let dealerValue = checkValue(dealerCards);
+
+    if (dealerValue < 17){
+        dealCard(deck, dealerCards);
+        dealerHand(dealerCards, 3);
+    }
+
+
 }
 
 
