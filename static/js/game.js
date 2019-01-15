@@ -5,13 +5,10 @@ function fillDeck() {
 
     for (let suit of suits) {
         for (let value of values) {
-
-            //etc
             let card = {suit: suit, value: value, image: `${value}_of_${suit}.png`.toLowerCase()};
-            for (let i = 0; i < 1; i++) {
+            for (let i = 0; i < 6; i++) {
                 deck.push(card);
             }
-
         }
     }
 
@@ -27,7 +24,7 @@ function shuffle(a) {
         a[i] = a[j];
         a[j] = x;
     }
-    return a;
+    return a.slice(0, 250);
 }
 
 
@@ -40,21 +37,26 @@ function dealCard(deck, hand){
 function showHand(hand){
     let userCards = document.getElementById('player-deck');
     let playerHand = document.querySelectorAll('.player-card');
-    for (let i = 0; i < playerHand.length; i++){
+    for (let i = 0; i < 5; i++){
             let image = hand[i].image;
-            playerHand[i].innerHTML = `'<img src="/static/img/cards/${image}" height="350"/>'`;
+            playerHand[i].innerHTML = `<img src="/static/img/cards/${image}" height="350"/>`;
+            playerHand[i].style.zIndex = `${i}`;
+            playerHand[i].style.marginLeft = `${i * 2.5}%`;
     }
 }
 
 
 function game(){
     let hand = [];
-    let deck = fillDeck();
-    shuffle(deck);
-    for (let i=0; i < 2; i++){
+    let initDeck = fillDeck(); // fills deck with 312 cards
+    shuffle(initDeck); // shuffles the deck
+    let deck = initDeck.slice(0, 250); // using only the top 250 cards
+    console.log(deck);
+    for (let i=0; i < 5; i++){
         dealCard(deck, hand);
     }
     showHand(hand);
 }
+
 
 game();
