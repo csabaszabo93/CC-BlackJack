@@ -106,6 +106,8 @@ function game(){
     showHand(playerCards, '.player-card');
     dealerHand(dealerCards);
 
+    checkBust(playerCards);
+
     if (checkNatural(dealerCards)){
         showHand(dealerCards, '.dealer-card');
     }
