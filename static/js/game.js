@@ -169,4 +169,16 @@ function evaluateHands(playerHand, dealerHand){
     } else { setTimeout(function () { alert(`"Computer: ${dealerValue} || Player: ${playerValue} - Player Died"`); location.reload(); }, 150); }
 }
 
+
+document.body.onkeyup = function(a){
+    if (a.keyCode === 32){
+        stand()
+    } else if (a.keyCode === 13){
+        hit()
+    } else if (a.keyCode === 27){
+        surrender()
+    }
+};
+
+
 game();
