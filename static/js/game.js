@@ -34,7 +34,6 @@ function dealCard(deck, hand){
 
 
 function showHand(hand){
-    let userCards = document.getElementById('player-deck');
     let playerHand = document.querySelectorAll('.player-card');
     for (let i = 0; i < 5; i++){
             let image = hand[i].image;
@@ -45,16 +44,34 @@ function showHand(hand){
 }
 
 
+function dealerHand(hand){
+    let dealerHand = document.querySelectorAll('.dealer-card');
+    console.log(dealerHand);
+    for (let i = 0; i < 5; i++){
+        if (i !== 1){
+            let image = hand[i].image;
+            dealerHand[i].innerHTML = `<img src="/static/img/cards/${image}" height="120"/>`;
+        } else {
+            dealerHand[i].innerHTML = `<img src="/static/img/cards/red_joker.png" height="120"/>`;
+        }
+    }
+}
+
+
 function game(){
-    let hand = [];
+    let playerCards = [];
+    let dealerCards = [];
     let initDeck = fillDeck(); // fills deck with 312 cards
     shuffle(initDeck); // shuffles the deck
     let deck = initDeck.slice(0, 250); // using only the top 250 cards
-    console.log(deck);
-    for (let i=0; i < 2; i++){
-        dealCard(deck, hand);
+    for (let i=0; i < 5; i++){
+        dealCard(deck, playerCards);
+        dealCard(deck, dealerCards);
     }
-    showHand(hand);
+    showHand(playerCards);
+    dealerHand(dealerCards);
+
+
 }
 
 
