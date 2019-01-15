@@ -24,9 +24,8 @@ function shuffle(a) {
         a[i] = a[j];
         a[j] = x;
     }
-    return a.slice(0, 250);
+    return a;
 }
-
 
 function dealCard(deck, hand){
     let card = deck.pop();
@@ -39,7 +38,7 @@ function showHand(hand){
     let playerHand = document.querySelectorAll('.player-card');
     for (let i = 0; i < 5; i++){
             let image = hand[i].image;
-            playerHand[i].innerHTML = `<img src="/static/img/cards/${image}" height="350"/>`;
+            playerHand[i].innerHTML = `<img src="/static/img/cards/${image}" height="120"/>`;
             playerHand[i].style.zIndex = `${i}`;
             playerHand[i].style.marginLeft = `${i * 2.5}%`;
     }
@@ -52,7 +51,7 @@ function game(){
     shuffle(initDeck); // shuffles the deck
     let deck = initDeck.slice(0, 250); // using only the top 250 cards
     console.log(deck);
-    for (let i=0; i < 5; i++){
+    for (let i=0; i < 2; i++){
         dealCard(deck, hand);
     }
     showHand(hand);

@@ -1,0 +1,48 @@
+body {
+    background-color: #3A7734 !important;
+}
+footer {
+    display: flex;
+    justify-content: center;
+    padding: 0.5%;
+    height: 55px;
+    width: 100vw;
+    background-color: #f8f9fa;
+    position: absolute;
+    bottom: 0;
+}
+.btn-container {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+#btn-double, #btn-hit, #btn-split, #btn-stand, #btn-surrender {
+    margin: 0 4px;
+}
+#main-deck {
+    margin-top: 2%;
+    margin-left: 2%;
+    height: 100px;
+}
+.deck {
+    margin: 5px 0 !important;
+    align-content: center;
+    border: 1px solid white;
+}
+.my-card {
+    width: 100px !important;
+    height: 120px !important;
+    border: 1px solid white;
+}
+.card-container{
+    display: inline-flex;
+    margin: auto;
+}
+#player-deck{
+    position: absolute;
+    width: 100%;
+    bottom: 55px;
+}
+#dealer-deck {
+    width: 100%;
+}
