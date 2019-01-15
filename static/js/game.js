@@ -79,7 +79,7 @@ function checkNatural(hand) {
     let value = checkValue(hand);
     if (value === 21) {
         setTimeout(function () {
-            alert("Natural Win - Fatality!");
+            alert("Natural Win - Fatality!"); location.reload();
         }, 150);
         return true;
     }
@@ -136,7 +136,7 @@ function checkBust(hand){ // check if player has 2 Aces at the beginning and bus
     hand = JSON.parse(sessionStorage.getItem("hand"));
     let value = checkValue(hand);
     if(value > 21){
-        setTimeout(function() { alert("Busted"); }, 150);
+        setTimeout(function() { alert("Busted"); location.reload();}, 150);
     }
 }
 
@@ -163,12 +163,12 @@ function evaluateHands(playerHand, dealerHand){
     let playerValue = checkValue(playerHand);
     let dealerValue =  checkValue(dealerHand);
     if (playerValue > 21){
-        setTimeout(function() { alert("Busted"); }, 150);
+        setTimeout(function() { alert("Busted"); location.reload(); }, 150);
     } else if (dealerValue > 21 || playerValue > dealerValue) {
-        setTimeout(function () {alert(`"Computer: ${dealerValue} || Player: ${playerValue} - Player Wins"`);}, 150);
+        setTimeout(function () {alert(`"Computer: ${dealerValue} || Player: ${playerValue} - Player Wins"`); location.reload();}, 150);
     } else if (playerValue === dealerValue) {
         setTimeout(function () { alert("Draw!"); }, 150);
-    } else { setTimeout(function () { alert(`"Computer: ${dealerValue} || Player: ${playerValue} - Player Died"`); }, 150); }
+    } else { setTimeout(function () { alert(`"Computer: ${dealerValue} || Player: ${playerValue} - Player Died"`); location.reload(); }, 150); }
 }
 
 game();
