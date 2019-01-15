@@ -30,6 +30,8 @@ function shuffle(a) {
 function dealCard(deck, hand){
     let card = deck.pop();
     hand.push(card);
+    sessionStorage["deck"] = JSON.stringify(deck);
+    sessionStorage["hand"] = JSON.stringify(hand);
 }
 
 
@@ -50,12 +52,22 @@ function game(){
     let initDeck = fillDeck(); // fills deck with 312 cards
     shuffle(initDeck); // shuffles the deck
     let deck = initDeck.slice(0, 250); // using only the top 250 cards
-    console.log(deck);
+    sessionStorage.setItem("deck", JSON.stringify(deck));  // put deck into localStorage
+    sessionStorage.setItem("hand",JSON.stringify(hand));
     for (let i=0; i < 2; i++){
         dealCard(deck, hand);
     }
     showHand(hand);
 }
 
+let hitButton = document.getElementById('btn-hit');
+hitButton.addEventListener("click", hit);
+
+function hit(event){
+    deck = JSON.parse(sessionStorage.getItem("deck"))
+    hand = JSON.parse(sessionStorage.getItem("hand"));
+    dealCard(deck,hand);
+    showHand(hand);
+}
 
 game();
