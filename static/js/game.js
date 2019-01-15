@@ -48,6 +48,8 @@ function showHand(hand){
 
 
 function game(){
+    let hitButton = document.getElementById('btn-hit');
+    hitButton.addEventListener("click", hit);
     let hand = [];
     let initDeck = fillDeck(); // fills deck with 312 cards
     shuffle(initDeck); // shuffles the deck
@@ -60,8 +62,6 @@ function game(){
     showHand(hand);
 }
 
-let hitButton = document.getElementById('btn-hit');
-hitButton.addEventListener("click", hit);
 
 function hit(event){
     deck = JSON.parse(sessionStorage.getItem("deck"))
