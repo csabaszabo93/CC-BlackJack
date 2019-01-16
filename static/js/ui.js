@@ -10,7 +10,13 @@ function setDesign() {
         }
     }
     window.onload = function () {
-        dealCardToPlayer();
+        dealCardTo("even-l1", "player");
+        setTimeout(function() {
+            dealCardTo("even-r1", "player");
+        }, 4000);
+        setTimeout(function() {
+            dealCardTo("even-l1", "dealer");
+        }, 8000);
     };
 }
 function moveOut() {
@@ -19,14 +25,28 @@ function moveOut() {
 function moveBack() {
     this.childNodes[0].style.marginTop = "0";
 }
-function dealCardToPlayer() {
-    let cardToPlayer = document.getElementById('main-deck-player');
-    cardToPlayer.addEventListener('transitionend', flip);
-    cardToPlayer.classList.add("deal-player-card");
+function dealCardTo(slot, who) {
+    let card = document.getElementById(`main-deck-${who}`);
+    card.addEventListener('transitionend', function() {
+        goBack(card, slot, who);
+    });
+
+    card.classList.remove("hidden");
+    card.classList.add(`deal-${who}-card`);
+    card.classList.add(slot);
 }
 function dealCardToDealer() {
     this.classList.add("deal-dealer-card");
 }
-function flip() {
-    this.classList.add("flip-card");
+function goBack(animatedCard, slot, from) {
+    let deck = document.getElementById(`${from}-deck`);
+    let newCard = deck.getElementsByClassName(slot)[0];
+    let back = newCard.getElementsByClassName('back')[0];
+    let front = newCard.getElementsByClassName('front')[0];
+    newCard.classList.remove("hidden");
+    animatedCard.classList.add("hidden");
+    animatedCard.classList.remove(`deal-${from}-card`);
+    animatedCard.classList.remove(slot);
+    front.classList.add("flip-card");
+    back.classList.add("flip-card");
 }

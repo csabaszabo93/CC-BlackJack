@@ -4,77 +4,77 @@
     left: 50%;
 }
 .odd-0 {
-    transform: translate(-50%, 0);
+    transform: translate(-50%, 0) !important;
 }
 .odd-l1 {
-    transform: translate(-150%, 0);
+    transform: translate(-150%, 0) !important;
 }
 .odd-r1 {
-    transform: translate(50%, 0);
+    transform: translate(50%, 0) !important;
 }
 .odd-l2 {
-    transform: translate(-250%, 0);
+    transform: translate(-250%, 0) !important;
 }
 .odd-r2 {
-    transform: translate(150%, 0);
+    transform: translate(150%, 0) !important;
 }
 .odd-l3 {
-    transform: translate(-350%, 0);
+    transform: translate(-350%, 0) !important;
 }
 .odd-r3 {
-    transform: translate(250%, 0);
+    transform: translate(250%, 0) !important;
 }
 .odd-l4 {
-    transform: translate(-450%, 0);
+    transform: translate(-450%, 0) !important;
 }
 .odd-r4 {
-    transform: translate(350%, 0);
+    transform: translate(350%, 0) !important;
 }
 .odd-l5 {
-    transform: translate(-550%, 0);
+    transform: translate(-550%, 0) !important;
 }
 .odd-r5 {
-    transform: translate(450%, 0);
+    transform: translate(450%, 0) !important;
 }
 .odd-l6 {
-    transform: translate(-650%, 0);
+    transform: translate(-650%, 0) !important;
 }
 .odd-r6 {
-    transform: translate(550%, 0);
+    transform: translate(550%, 0) !important;
 }
 .even-l1 {
-    transform: translate(-100%, 0);
+    transform: translate(-100%, 0) !important;
 }
 .even-r1 {
-    transform: translate(0%, 0);
+    transform: translate(0%, 0) !important;
 }
 .even-l2 {
-    transform: translate(-200%, 0);
+    transform: translate(-200%, 0) !important;
 }
 .even-r2 {
-    transform: translate(100%, 0);
+    transform: translate(100%, 0) !important;
 }
 .even-l3 {
-    transform: translate(-300%, 0);
+    transform: translate(-300%, 0) !important;
 }
 .even-r3 {
-    transform: translate(200%, 0);
+    transform: translate(200%, 0) !important;
 }
 .even-l4 {
-    transform: translate(-400%, 0);
+    transform: translate(-400%, 0) !important;
 }
 .even-r4 {
-    transform: translate(300%, 0);
+    transform: translate(300%, 0) !important;
 }
 .even-l5 {
-    transform: translate(-500%, 0);
+    transform: translate(-500%, 0) !important;
 }
 .even-r5 {
-    transform: translate(400%, 0);
+    transform: translate(400%, 0) !important;
 }
 .even-l6 {
-    transform: translate(-600%, 0);
+    transform: translate(-600%, 0) !important;
 }
 .even-r6 {
-    transform: translate(500%, 0);
+    transform: translate(500%, 0) !important;
 }

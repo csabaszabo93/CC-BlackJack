@@ -59,10 +59,12 @@ function showHand(hand, divClass){
             let card = document.createElement('div');
             let cardFront = document.createElement('div');
             let cardBack = document.createElement('div');
+            let flipper = document.createElement('div');
             let cardImage = document.createElement('img');
             let backImage = document.createElement('img');
             card.classList.add(divClass);
             card.classList.add('slot');
+            card.classList.add('hidden');
             if (i === midIndex && parity === 'odd') {
                 card.classList.add(`${parity}-0`);
             } else {
@@ -84,10 +86,10 @@ function showHand(hand, divClass){
             cardImage.setAttribute('src', `/static/img/cards/${imageURL}`);
             if (divClass === 'dealer-card' && i === 1) {
                 cardFront.appendChild(backImage);
-                //cardBack.appendChild(cardImage);
+                cardBack.appendChild(cardImage);
             } else {
                 cardFront.appendChild(cardImage);
-                //cardBack.appendChild(backImage);
+                cardBack.appendChild(backImage);
             }
             deck.appendChild(card);
     }
