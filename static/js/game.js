@@ -95,9 +95,14 @@ function checkNatural(hand, player) {
 }
 
 function game(){
+
     let chips = parseInt(handleChips());
-    console.log(chips);
     document.getElementById('chips').innerHTML = chips;
+
+    let bet = getBet(chips);
+    console.log(bet);
+    localStorage.setItem("bet", bet);
+
     let hitButton = document.getElementById('btn-hit');
 
     hitButton.addEventListener("click", function(event){
@@ -157,7 +162,7 @@ function checkBust(hand) { // check if player has 2 Aces at the beginning and bu
     hand = JSON.parse(sessionStorage.getItem("hand"));
     let value = checkValue(hand);
     if(value > 21){
-        chips -= 10;
+        chips -= parseInt(localStorage.getItem('bet'));
         localStorage.setItem("chips", chips);
         setTimeout(function() { alert("Busted"); location.reload();}, 150);
     }
@@ -180,7 +185,7 @@ function stand(event){
 
 function surrender(event){
     let chips = parseInt(localStorage.getItem("chips"));
-    chips -= 10;
+    chips -= parseInt(localStorage.getItem('bet'));
     localStorage.setItem("chips", chips);
     location.reload();
 }
@@ -192,13 +197,13 @@ function evaluateHands(playerHand, dealerHand){
     if (playerValue > 21){
         setTimeout(function() { alert("Busted"); location.reload(); }, 150);
     } else if (dealerValue > 21 || playerValue > dealerValue) {
-        chips += 10;
+        chips += parseInt(localStorage.getItem('bet'));
         localStorage.setItem("chips", chips);
         setTimeout(function () {alert(`"Computer: ${dealerValue} || Player: ${playerValue} - Player Wins"`); location.reload();}, 150);
     } else if (playerValue === dealerValue) {
         setTimeout(function () { alert("Draw!"); location.reload();}, 150);
     } else {
-        chips -= 10;
+        chips -= parseInt(localStorage.getItem('bet'));
         localStorage.setItem("chips", chips);
         setTimeout(function () { alert(`"Computer: ${dealerValue} || Player: ${playerValue} - Player Died"`); location.reload(); }, 150); }
 }
@@ -223,6 +228,15 @@ function handleChips(){
     return localStorage.getItem("chips");
 }
 
+function getBet(chips){
+
+    do{
+        bet = prompt('How much do you want to bet? You have ' + `${chips}` + ' $ on your hand.');
+    } while(bet == null || bet === "" );
+
+    return bet;
+}
+
 
 document.body.onkeyup = function(a){
     if (a.keyCode === 32){
@@ -234,4 +248,4 @@ document.body.onkeyup = function(a){
     }
 };
 
-game()
+game();
