@@ -10,7 +10,8 @@ def index():
 
 @app.route('/game')
 def game():
-    return render_template('game.html')
+    chips = 1000
+    return render_template('game.html', chips = chips)
 
 
 if __name__ == '__main__':

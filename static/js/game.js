@@ -29,6 +29,7 @@ function shuffle(a) {
 
 function dealCard(deck, hand){
     let card = deck.pop();
+    console.log(card.image);
     sessionStorage.setItem("deck", JSON.stringify(deck));
     hand.push(card);
 }
@@ -75,9 +76,12 @@ function checkValue(cards){
 
 
 function checkNatural(hand) {
+    let chips = parseInt(localStorage.getItem("chips"));
     let value = checkValue(hand);
     if (value === 21) {
         setTimeout(function () {
+            chips += 15;
+            localStorage.setItem("chips", chips);
             alert("Natural Win - Fatality!"); location.reload();
         }, 150);
         return true;
@@ -86,8 +90,21 @@ function checkNatural(hand) {
 }
 
 function game(){
+    let chips = parseInt(handleChips());
+    console.log(chips);
+    document.getElementById('chips').innerHTML = chips;
     let hitButton = document.getElementById('btn-hit');
-    hitButton.addEventListener("click", hit);
+
+    hitButton.addEventListener("click", function(event){
+        deck = JSON.parse(sessionStorage.getItem("deck"));
+        hand = JSON.parse(sessionStorage.getItem("hand"));
+        dealCard(deck,hand);
+        sessionStorage["hand"] = JSON.stringify(hand);
+        hand = JSON.parse(sessionStorage.getItem("hand"));
+        showHand(hand, '.player-card');
+        checkBust(hand, chips);
+    });
+
     let standButton = document.getElementById('btn-stand');
     standButton.addEventListener("click", stand);
     let surrenderButton = document.getElementById('btn-surrender');
@@ -107,7 +124,7 @@ function game(){
     showHand(playerCards, '.player-card');
     dealerHand(dealerCards);
 
-    checkBust(playerCards);
+    checkBust(playerCards, chips);
 
     if (checkNatural(dealerCards)){
         showHand(dealerCards, '.dealer-card');
@@ -117,6 +134,7 @@ function game(){
     }
 
     sessionStorage.setItem("deck", JSON.stringify(deck));
+
 }
 
 function hit(event){
@@ -125,15 +143,17 @@ function hit(event){
     dealCard(deck,hand);
     sessionStorage["hand"] = JSON.stringify(hand);
     hand = JSON.parse(sessionStorage.getItem("hand"));
-    console.log(hand);
     showHand(hand, '.player-card');
     checkBust(hand);
 }
 
-function checkBust(hand){ // check if player has 2 Aces at the beginning and bust them
+function checkBust(hand) { // check if player has 2 Aces at the beginning and bust them
+    let chips = parseInt(localStorage.getItem("chips"));
     hand = JSON.parse(sessionStorage.getItem("hand"));
     let value = checkValue(hand);
     if(value > 21){
+        chips -= 10;
+        localStorage.setItem("chips", chips);
         setTimeout(function() { alert("Busted"); location.reload();}, 150);
     }
 }
@@ -154,19 +174,37 @@ function stand(event){
 }
 
 function surrender(event){
+    let chips = parseInt(localStorage.getItem("chips"));
+    chips -= 10;
+    localStorage.setItem("chips", chips);
     location.reload();
 }
 
 function evaluateHands(playerHand, dealerHand){
+    let chips = parseInt(localStorage.getItem("chips"));
     let playerValue = checkValue(playerHand);
     let dealerValue =  checkValue(dealerHand);
     if (playerValue > 21){
         setTimeout(function() { alert("Busted"); location.reload(); }, 150);
     } else if (dealerValue > 21 || playerValue > dealerValue) {
+        chips += 10;
+        localStorage.setItem("chips", chips);
         setTimeout(function () {alert(`"Computer: ${dealerValue} || Player: ${playerValue} - Player Wins"`); location.reload();}, 150);
     } else if (playerValue === dealerValue) {
         setTimeout(function () { alert("Draw!"); location.reload();}, 150);
-    } else { setTimeout(function () { alert(`"Computer: ${dealerValue} || Player: ${playerValue} - Player Died"`); location.reload(); }, 150); }
+    } else {
+        chips -= 10;
+        localStorage.setItem("chips", chips);
+        setTimeout(function () { alert(`"Computer: ${dealerValue} || Player: ${playerValue} - Player Died"`); location.reload(); }, 150); }
+}
+
+
+function handleChips(){
+    if (!localStorage.getItem('chips')){
+        let chips = document.getElementById('chips');
+        localStorage.setItem("chips", chips.dataset.amount);
+    } else {}
+    return localStorage.getItem("chips");
 }
 
 
@@ -179,6 +217,5 @@ document.body.onkeyup = function(a){
         surrender()
     }
 };
-
 
 game();
