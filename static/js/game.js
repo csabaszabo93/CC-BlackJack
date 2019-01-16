@@ -250,7 +250,6 @@ function handleChips(){ // handles the amount of chips the player has. Initially
 
 function getBet(chips){ // player is prompted to enter a number to bet. Still need to handle a case if the bet is > than the money the player has.
     if (isNaN(chips)){
-        console.log('123')
     } else {
         do{
             bet = prompt('How much do you want to bet? You have ' + `${chips}` + ' $ on your hand.');
