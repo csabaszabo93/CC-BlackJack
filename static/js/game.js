@@ -75,15 +75,20 @@ function checkValue(cards){
 }
 
 
-function checkNatural(hand) {
+function checkNatural(hand, player) {
     let chips = parseInt(localStorage.getItem("chips"));
     let value = checkValue(hand);
     if (value === 21) {
-        setTimeout(function () {
+        if (player === true){
             chips += 15;
             localStorage.setItem("chips", chips);
-            alert("Natural Win - Fatality!"); location.reload();
-        }, 150);
+            setTimeout(function () {alert('Player Natural Win - Fatality!'); location.reload();}, 150)
+        } else {
+            setTimeout(function () {
+                alert("Computer Natural Win - Fatality!");
+                location.reload();
+            }, 150);
+        }
         return true;
     }
     return false;
@@ -126,10 +131,10 @@ function game(){
 
     checkBust(playerCards, chips);
 
-    if (checkNatural(dealerCards)){
+    if (checkNatural(dealerCards, false)){
         showHand(dealerCards, '.dealer-card');
     }
-    if (checkNatural(playerCards)){
+    if (checkNatural(playerCards, true)){
         showHand(dealerCards, '.dealer-card');
     }
 
