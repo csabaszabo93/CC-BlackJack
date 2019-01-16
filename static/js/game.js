@@ -153,7 +153,6 @@ function checkBust(hand) { // check if player has 2 Aces at the beginning and bu
     hand = JSON.parse(sessionStorage.getItem("hand"));
     let value = countValue(hand);
     let playerHasAce = checkHandForAce(hand);
-    debugger;
     if(value > 21 && !playerHasAce){
         chips -= parseInt(localStorage.getItem('bet')); // player is losing money.
         localStorage.setItem("chips", chips); // chips stored in localStorage
@@ -250,10 +249,12 @@ function handleChips(){ // handles the amount of chips the player has. Initially
 }
 
 function getBet(chips){ // player is prompted to enter a number to bet. Still need to handle a case if the bet is > than the money the player has.
-
-    do{
-        bet = prompt('How much do you want to bet? You have ' + `${chips}` + ' $ on your hand.');
-    } while(bet == null || bet === "" || bet > chips );
+    console.log(chips);
+    if (typeof chips === 'number'){
+        do{
+            bet = prompt('How much do you want to bet? You have ' + `${chips}` + ' $ on your hand.');
+        } while(bet == null || bet === "" || bet > chips );
+    } else {}
 
     return bet;
 }
