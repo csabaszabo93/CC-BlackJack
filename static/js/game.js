@@ -66,21 +66,6 @@ function dealerHand(hand){
     }
 }
 
-
-function checkValue(cards){
-    let values = [];
-    for (card of cards){
-        if (card.value === 'Ace'){
-            values.push(11);
-        } else if (typeof card.value === 'string'){
-            values.push(10);
-        } else {
-            values.push(card.value);
-        }
-    }
-    return values.reduce((a, b) => a + b, 0)
-}
-
 function countValue(hand){
     value = 0;
     for(card of hand){
@@ -91,7 +76,7 @@ function countValue(hand){
 
 function checkNatural(hand, player) {
     let chips = parseInt(localStorage.getItem("chips"));
-    let value = checkValue(hand);
+    let value = countValue(hand);
     if (value === 21) {
         if (player === true){
             chips += (parseInt(localStorage.getItem('bet'))*2); // chips awarded for Natural only if player has it
@@ -114,7 +99,6 @@ function game(){
     document.getElementById('chips').innerHTML = chips;
 
     let bet = getBet(chips);
-    console.log(bet);
     localStorage.setItem("bet", bet);
 
     let hitButton = document.getElementById('btn-hit');
@@ -139,7 +123,6 @@ function game(){
     sessionStorage["dealerHand"] = JSON.stringify(dealerCards);
     showHand(playerCards, '.player-card');
     dealerHand(dealerCards);
-
     checkBust(playerCards);
 
     if (checkNatural(dealerCards, false)){
@@ -166,8 +149,9 @@ function hit(event){
 function checkBust(hand) { // check if player has 2 Aces at the beginning and bust them
     let chips = parseInt(localStorage.getItem("chips")); // player's money from local storage
     hand = JSON.parse(sessionStorage.getItem("hand"));
-    let value = checkValue(hand);
+    let value = countValue(hand);
     let playerHasAce = checkHandForAce(hand);
+    debugger;
     if(value > 21 && !playerHasAce){
         chips -= parseInt(localStorage.getItem('bet')); // player is losing money.
         localStorage.setItem("chips", chips); // chips stored in localStorage
