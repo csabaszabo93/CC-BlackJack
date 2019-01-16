@@ -8,8 +8,13 @@
     {% block head %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-light bg-light">
-        Tetris BlackJack Cave
+    <img id="main-deck-dealer" class="" src="{{ url_for('static', filename='img/cards/cardback.png') }}">
+    <img id="main-deck-player" class="" src="{{ url_for('static', filename='img/cards/cardback.png') }}">
+    <img id="main-deck-stationer" class="" src="{{ url_for('static', filename='img/cards/cardback.png') }}">
+    <nav class="my-navbar">
+        <div class="centralize">
+            Tetris BlackJack Cave
+        </div>
     </nav>
     {% block content %}{% endblock %}
 </body>

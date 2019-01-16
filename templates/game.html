@@ -1,29 +1,29 @@
 {% extends 'layout.html' %}
 {% block head %}
+    <script src="{{ url_for('static', filename='js/ui.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/game.js') }}" defer></script>
 {% endblock %}
 {% block content %}
     <div id="dealer-deck" class="row deck">
         <div class="card-container">
-            <div class="my-card col-2">a</div>
-            <div class="my-card col-2">a</div>
-            <div class="my-card col-2">a</div>
-            <div class="my-card col-2">a</div>
-            <div class="my-card col-2">a</div>
+            <div class="my-card">a</div>
+            <div class="my-card">a</div>
+            <div class="my-card">a</div>
+            <div class="my-card">a</div>
+            <div class="my-card">a</div>
         </div>
     </div>
-    <img id="main-deck" src="{{ url_for('static', filename='img/cards/cardback.png') }}">
     <div id="player-deck" class="row deck">
         <div class="card-container">
-            <div class="my-card player-card col-2">a</div>
-            <div class="my-card player-card col-2">a</div>
-            <div class="my-card player-card col-2">a</div>
-            <div class="my-card player-card col-2">a</div>
-            <div class="my-card player-card col-2">a</div>
+            <div class="my-card player-card">a</div>
+            <div class="my-card player-card">a</div>
+            <div class="my-card player-card">a</div>
+            <div class="my-card player-card">a</div>
+            <div class="my-card player-card">a</div>
         </div>
     </div>
     <footer>
-        <div class="btn-container">
+        <div class="centralize">
             <div id="btn-double" class="btn btn-danger">Double</div>
             <div id="btn-split" class="btn btn-info">Split</div>
             <div id="btn-hit" class="btn btn-success">Hit</div>

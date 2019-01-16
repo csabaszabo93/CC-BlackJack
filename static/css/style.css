@@ -1,28 +1,58 @@
 body {
     background-color: #3A7734 !important;
 }
+.my-navbar {
+    margin: 0;
+    height: 10%;
+    width: 100vw;
+    background-color: #f8f9fa;
+    position: absolute;
+    top: 0;
+}
 footer {
-    display: flex;
-    justify-content: center;
-    padding: 0.5%;
-    height: 55px;
+    margin: 0;
+    height: 10%;
     width: 100vw;
     background-color: #f8f9fa;
     position: absolute;
     bottom: 0;
 }
-.btn-container {
-    display: flex;
-    justify-content: center;
-    margin: auto;
+.btn {
+    font-size: 2vmax !important;
+}
+img {
+    height: 10vmax !important;
+}
+.centralize {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 #btn-double, #btn-hit, #btn-split, #btn-stand, #btn-surrender {
     margin: 0 4px;
 }
-#main-deck {
-    margin-top: 2%;
-    margin-left: 2%;
-    height: 100px;
+#main-deck-player {
+    position: absolute;
+    bottom: 50%;
+    z-index: -2;
+    transform: translate(0,50%);
+}
+#main-deck-dealer {
+    position: absolute;
+    top: 50%;
+    z-index: -1;
+    transform: translate(0,-50%);
+}
+#main-deck-stationer {
+    position: absolute;
+    top: 50%;
+    z-index: -3;
+    transform: translate(0,-50%);
 }
 .deck {
     margin: 5px 0 !important;
@@ -30,19 +60,51 @@ footer {
     border: 1px solid white;
 }
 .my-card {
-    width: 100px !important;
-    height: 120px !important;
+    height: 10vmax !important;
+    padding: 0 !important;
     border: 1px solid white;
 }
 .card-container{
     display: inline-flex;
-    margin: auto;
+    position: relative;
+    left: 50%;
+    -webkit-transform: translate(-30%, 0);
+    -moz-transform: translate(-30%, 0);
+    -ms-transform: translate(-30%, 0);
+    -o-transform: translate(-30%, 0);
+    transform: translate(-30%, 0);
 }
 #player-deck{
     position: absolute;
+    height: 10vmax;
     width: 100%;
-    bottom: 55px;
+    bottom: 10%;
+    margin: 0;
 }
 #dealer-deck {
+    position: absolute;
+    height: 10vmax;
     width: 100%;
+    top: 10%;
+    margin: 0;
+}
+.deal-player-card {
+    -webkit-transition: 3s;
+    -moz-transition: 3s;
+    -o-transition: 3s;
+    transition: 3s;
+    bottom: 10% !important;
+    transform: translate(0%,0%) !important;
+}
+.deal-dealer-card {
+    -webkit-transition: 3s;
+    -moz-transition: 3s;
+    -o-transition: 3s;
+    transition: 3s;
+    top: 10% !important;
+    transform: translate(0%, 0%) !important;
+}
+.flip-card {
+    transform: rotateX(180deg) !important;
+
 }
