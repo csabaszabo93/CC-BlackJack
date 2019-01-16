@@ -79,11 +79,13 @@ function checkNatural(hand, player) {
     let value = countValue(hand);
     if (value === 21) {
         if (player === true){
-            chips += (parseInt(localStorage.getItem('bet'))*2); // chips awarded for Natural only if player has it
+            chips += (parseInt(localStorage.getItem('bet'))*1.5); // chips awarded for Natural only if player has it
             localStorage.setItem("chips", chips);
             setTimeout(function () {alert('Player Natural Win - Fatality!'); location.reload();}, 150)
         } else {
             setTimeout(function () {
+                chips -= (parseInt(localStorage.getItem('bet'))); // chips awarded for Natural only if player has it
+                localStorage.setItem("chips", chips);
                 alert("Computer Natural Win - Fatality!");
                 location.reload();
             }, 150);
