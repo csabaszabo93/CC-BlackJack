@@ -80,7 +80,7 @@ function checkNatural(hand, player) {
     let value = checkValue(hand);
     if (value === 21) {
         if (player === true){
-            chips += 15;
+            chips += (parseInt(localStorage.getItem('bet'))*2); // chips awarded for Natural only if player has it
             localStorage.setItem("chips", chips);
             setTimeout(function () {alert('Player Natural Win - Fatality!'); location.reload();}, 150)
         } else {
@@ -105,15 +105,7 @@ function game(){
 
     let hitButton = document.getElementById('btn-hit');
 
-    hitButton.addEventListener("click", function(event){
-        deck = JSON.parse(sessionStorage.getItem("deck"));
-        hand = JSON.parse(sessionStorage.getItem("hand"));
-        dealCard(deck,hand);
-        sessionStorage["hand"] = JSON.stringify(hand);
-        hand = JSON.parse(sessionStorage.getItem("hand"));
-        showHand(hand, '.player-card');
-        checkBust(hand, chips);
-    });
+    hitButton.addEventListener("click", hit);
 
     let standButton = document.getElementById('btn-stand');
     standButton.addEventListener("click", stand);
@@ -158,12 +150,12 @@ function hit(event){
 }
 
 function checkBust(hand) { // check if player has 2 Aces at the beginning and bust them
-    let chips = parseInt(localStorage.getItem("chips"));
+    let chips = parseInt(localStorage.getItem("chips")); // player's money from local storage
     hand = JSON.parse(sessionStorage.getItem("hand"));
     let value = checkValue(hand);
     if(value > 21){
-        chips -= parseInt(localStorage.getItem('bet'));
-        localStorage.setItem("chips", chips);
+        chips -= parseInt(localStorage.getItem('bet')); // player is losing money.
+        localStorage.setItem("chips", chips); // chips stored in localStorage
         setTimeout(function() { alert("Busted"); location.reload();}, 150);
     }
 }
@@ -209,7 +201,7 @@ function evaluateHands(playerHand, dealerHand){
 }
 
 
-function handleChips(){
+function handleChips(){ // handles the amount of chips the player has. Initially gets them out of the data server.py sends, after that uses localStorage
     if (!localStorage.getItem('chips')){
         let chips = document.getElementById('chips');
         localStorage.setItem("chips", chips.dataset.amount);
@@ -228,11 +220,11 @@ function handleChips(){
     return localStorage.getItem("chips");
 }
 
-function getBet(chips){
+function getBet(chips){ // player is prompted to enter a number to bet. Still need to handle a case if the bet is > than the money the player has.
 
     do{
         bet = prompt('How much do you want to bet? You have ' + `${chips}` + ' $ on your hand.');
-    } while(bet == null || bet === "" );
+    } while(bet == null || bet === "" || bet > chips );
 
     return bet;
 }
