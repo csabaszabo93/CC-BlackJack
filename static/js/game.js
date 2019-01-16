@@ -203,7 +203,18 @@ function handleChips(){
     if (!localStorage.getItem('chips')){
         let chips = document.getElementById('chips');
         localStorage.setItem("chips", chips.dataset.amount);
-    } else {}
+    } else {
+        let chips = parseInt(localStorage.getItem("chips"));
+        if (chips <= 0) {
+            let answer = confirm("You have lost all your money. Would you like to take a 100$ loan??");
+            if (answer){
+                localStorage.setItem("chips", 100);
+            } else {
+                localStorage.removeItem('chips');
+                window.location.href='/';
+            }
+        }
+    }
     return localStorage.getItem("chips");
 }
 
@@ -218,4 +229,4 @@ document.body.onkeyup = function(a){
     }
 };
 
-game();
+game()

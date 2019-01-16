@@ -10,7 +10,7 @@ def index():
 
 @app.route('/game')
 def game():
-    chips = 1000
+    chips = 50
     return render_template('game.html', chips = chips)
 
 
