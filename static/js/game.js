@@ -1,11 +1,19 @@
 function fillDeck() {
     let deck = [];
     let suits = ['Hearts', 'Spades', 'Clubs', 'Diamonds'];
-    let values = ['Ace', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King'];
+    let values = ['Ace', 9,  'Ace', 'Ace', 'Ace'];
 
     for (let suit of suits) {
+        let point = 0;
         for (let value of values) {
-            let card = {suit: suit, value: value, image: `${value}_of_${suit}.png`.toLowerCase()};
+            if (value === 'Ace'){
+                point = 11;
+            } else if (typeof value === 'string'){
+                point = 10;
+            } else {
+                point = value;
+            }
+            let card = {suit: suit, value: value, point:point, image: `${value}_of_${suit}.png`.toLowerCase()};
             for (let i = 0; i < 6; i++) {
                 deck.push(card);
             }
@@ -73,9 +81,16 @@ function checkValue(cards){
     return values.reduce((a, b) => a + b, 0)
 }
 
+function countValue(hand){
+    value = 0;
+    for(card of hand){
+        value += card.point;
+    }
+    return value;
+}
 
 function checkNatural(hand) {
-    let value = checkValue(hand);
+    let value = countValue(hand);
     if (value === 21) {
         setTimeout(function () {
             alert("Natural Win - Fatality!"); location.reload();
@@ -125,17 +140,45 @@ function hit(event){
     dealCard(deck,hand);
     sessionStorage["hand"] = JSON.stringify(hand);
     hand = JSON.parse(sessionStorage.getItem("hand"));
-    console.log(hand);
     showHand(hand, '.player-card');
     checkBust(hand);
 }
 
 function checkBust(hand){ // check if player has 2 Aces at the beginning and bust them
     hand = JSON.parse(sessionStorage.getItem("hand"));
-    let value = checkValue(hand);
-    if(value > 21){
-        setTimeout(function() { alert("Busted"); location.reload();}, 150);
+    let value = countValue(hand);
+    let playerHasAce = checkHandForAce(hand);
+    if(value > 21 && !playerHasAce){
+        setTimeout(function() { alert("Busted"); location.reload();}, 150)
     }
+    else if(value > 21 && playerHasAce){
+        reduceAceInHand(hand);
+        hand = JSON.parse(sessionStorage.getItem("hand"));
+        checkBust(hand);
+    }
+}
+
+
+function checkHandForAce(hand){
+    let playerHasAce = false;
+    for(card of hand){
+        if(card.value == 'Ace' && card.point == 11){
+            return true;
+        }
+    }
+
+    return playerHasAce;
+
+}
+function reduceAceInHand(hand){
+    for(card of hand){
+        if(card.value == 'Ace' && card.point == 11){
+            card.point = 1;
+            break;
+        }
+    }
+    sessionStorage.setItem("hand", JSON.stringify(hand));
+    return hand;
 }
 
 function stand(event){
@@ -143,7 +186,7 @@ function stand(event){
     playerCards = dealerCards = JSON.parse(sessionStorage.getItem("hand"));
     dealerCards = JSON.parse(sessionStorage.getItem("dealerHand"));
 
-    while (checkValue(dealerCards) < 17) {
+    while (countValue(dealerCards) < 17) {
         dealCard(deck, dealerCards);
         dealerHand(dealerCards, 3);
     }
@@ -158,8 +201,8 @@ function surrender(event){
 }
 
 function evaluateHands(playerHand, dealerHand){
-    let playerValue = checkValue(playerHand);
-    let dealerValue =  checkValue(dealerHand);
+    let playerValue = countValue(playerHand);
+    let dealerValue =  countValue(dealerHand);
     if (playerValue > 21){
         setTimeout(function() { alert("Busted"); location.reload(); }, 150);
     } else if (dealerValue > 21 || playerValue > dealerValue) {
@@ -179,6 +222,5 @@ document.body.onkeyup = function(a){
         surrender()
     }
 };
-
 
 game();
