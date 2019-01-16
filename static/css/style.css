@@ -59,20 +59,25 @@ img {
     align-content: center;
     border: 1px solid white;
 }
-.my-card {
+.player-card, .dealer-card {
+    position: relative;
+    top: 0;
     height: 10vmax !important;
+    width: 7vmax !important;
     padding: 0 !important;
-    border: 1px solid white;
+}
+.hidden {
+    visibility: hidden;
 }
 .card-container{
     display: inline-flex;
     position: relative;
     left: 50%;
-    -webkit-transform: translate(-30%, 0);
-    -moz-transform: translate(-30%, 0);
-    -ms-transform: translate(-30%, 0);
-    -o-transform: translate(-30%, 0);
-    transform: translate(-30%, 0);
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    -o-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
 }
 #player-deck{
     position: absolute;
@@ -93,8 +98,9 @@ img {
     -moz-transition: 3s;
     -o-transition: 3s;
     transition: 3s;
-    bottom: 10% !important;
+    bottom: 11% !important;
     transform: translate(0%,0%) !important;
+    backface-visibility: visible !important;
 }
 .deal-dealer-card {
     -webkit-transition: 3s;
@@ -105,6 +111,6 @@ img {
     transform: translate(0%, 0%) !important;
 }
 .flip-card {
-    transform: rotateX(180deg) !important;
-
+    transform: rotateY(180deg) !important;
+    backface-visibility: hidden !important;
 }

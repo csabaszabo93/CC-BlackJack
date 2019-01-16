@@ -35,28 +35,67 @@ function dealCard(deck, hand){
 
 
 function showHand(hand, divClass){
-    let playerHand = document.querySelectorAll(divClass);
+    let deck;
+    let parity;
+    let midIndex = Math.floor(hand.length / 2);
+    let startIndex = midIndex;
+    if (hand.length / 2 === midIndex) {
+        parity = 'even';
+    } else {
+        parity = 'odd';
+    }
+    switch (divClass) {
+        case 'player-card':
+            deck = document.getElementById('player-deck');
+            break;
+        case 'dealer-card':
+            deck = document.getElementById('dealer-deck');
+            break;
+    }
+    while (deck.firstChild) {
+        deck.removeChild(deck.firstChild);
+    }
     for (let i = 0; i < hand.length; i++){
-            let image = hand[i].image;
-            playerHand[i].innerHTML = `<img src="/static/img/cards/${image}"/>`;
-            playerHand[i].addEventListener('mouseover', moveOut);
-            playerHand[i].addEventListener('mouseout', moveBack) ;
+            let card = document.createElement('div');
+            let cardFront = document.createElement('div');
+            let cardBack = document.createElement('div');
+            let cardImage = document.createElement('img');
+            let backImage = document.createElement('img');
+            card.classList.add(divClass);
+            card.classList.add('slot');
+            if (i === midIndex && parity === 'odd') {
+                card.classList.add(`${parity}-0`);
+            } else {
+                if (i < midIndex) {
+                    card.classList.add(`${parity}-l${startIndex}`);
+                    startIndex > 1 ? startIndex-- : null;
+                } else {
+                    card.classList.add(`${parity}-r${startIndex}`);
+                    startIndex++;
+                }
+            }
+            card.setAttribute('id', `${divClass}-${i}`);
+            backImage.setAttribute('src', `/static/img/cards/cardback.png`);
+            cardFront.classList.add('front');
+            cardBack.classList.add('back');
+            card.appendChild(cardBack);
+            card.appendChild(cardFront);
+            let imageURL = hand[i].image;
+            cardImage.setAttribute('src', `/static/img/cards/${imageURL}`);
+            if (divClass === 'dealer-card' && i === 1) {
+                cardFront.appendChild(backImage);
+                //cardBack.appendChild(cardImage);
+            } else {
+                cardFront.appendChild(cardImage);
+                //cardBack.appendChild(backImage);
+            }
+            deck.appendChild(card);
     }
 }
 
 
 function dealerHand(hand){
-    let dealerHand = document.querySelectorAll('.dealer-card');
-    for (let i = 0; i < hand.length; i++){
-        if (i !== 1){
-            let image = hand[i].image;
-            dealerHand[i].innerHTML = `<img src="/static/img/cards/${image}" height="120"/>`;
-        } else {
-            dealerHand[i].innerHTML = `<img src="/static/img/cards/cardback.png" height="120"/>`;
-        }
-        dealerHand[i].style.zIndex = `${i}`;
-        dealerHand[i].style.marginLeft = `${i * 2.5}%`;
-    }
+    showHand(hand, 'dealer-card');
 }
 
 
@@ -105,16 +144,16 @@ function game(){
     }
     sessionStorage["hand"] = JSON.stringify(playerCards);
     sessionStorage["dealerHand"] = JSON.stringify(dealerCards);
-    showHand(playerCards, '.player-card');
+    showHand(playerCards, 'player-card');
     dealerHand(dealerCards);
 
     checkBust(playerCards);
 
     if (checkNatural(dealerCards)){
-        showHand(dealerCards, '.dealer-card');
+        showHand(dealerCards, 'dealer-card');
     }
     if (checkNatural(playerCards)){
-        showHand(dealerCards, '.dealer-card');
+        showHand(dealerCards, 'dealer-card');
     }
 
     sessionStorage.setItem("deck", JSON.stringify(deck));
@@ -127,7 +166,7 @@ function hit(event){
     sessionStorage["hand"] = JSON.stringify(hand);
     hand = JSON.parse(sessionStorage.getItem("hand"));
     console.log(hand);
-    showHand(hand, '.player-card');
+    showHand(hand, 'player-card');
     checkBust(hand);
 }
 
@@ -149,7 +188,7 @@ function stand(event){
         dealerHand(dealerCards, 3);
     }
 
-    showHand(dealerCards, '.dealer-card');
+    showHand(dealerCards, 'dealer-card');
     evaluateHands(playerCards, dealerCards);
 
 }

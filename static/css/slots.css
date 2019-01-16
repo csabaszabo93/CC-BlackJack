@@ -1,0 +1,80 @@
+.slot {
+    position: absolute;
+    top: 0;
+    left: 50%;
+}
+.odd-0 {
+    transform: translate(-50%, 0);
+}
+.odd-l1 {
+    transform: translate(-150%, 0);
+}
+.odd-r1 {
+    transform: translate(50%, 0);
+}
+.odd-l2 {
+    transform: translate(-250%, 0);
+}
+.odd-r2 {
+    transform: translate(150%, 0);
+}
+.odd-l3 {
+    transform: translate(-350%, 0);
+}
+.odd-r3 {
+    transform: translate(250%, 0);
+}
+.odd-l4 {
+    transform: translate(-450%, 0);
+}
+.odd-r4 {
+    transform: translate(350%, 0);
+}
+.odd-l5 {
+    transform: translate(-550%, 0);
+}
+.odd-r5 {
+    transform: translate(450%, 0);
+}
+.odd-l6 {
+    transform: translate(-650%, 0);
+}
+.odd-r6 {
+    transform: translate(550%, 0);
+}
+.even-l1 {
+    transform: translate(-100%, 0);
+}
+.even-r1 {
+    transform: translate(0%, 0);
+}
+.even-l2 {
+    transform: translate(-200%, 0);
+}
+.even-r2 {
+    transform: translate(100%, 0);
+}
+.even-l3 {
+    transform: translate(-300%, 0);
+}
+.even-r3 {
+    transform: translate(200%, 0);
+}
+.even-l4 {
+    transform: translate(-400%, 0);
+}
+.even-r4 {
+    transform: translate(300%, 0);
+}
+.even-l5 {
+    transform: translate(-500%, 0);
+}
+.even-r5 {
+    transform: translate(400%, 0);
+}
+.even-l6 {
+    transform: translate(-600%, 0);
+}
+.even-r6 {
+    transform: translate(500%, 0);
+}
