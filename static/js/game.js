@@ -96,13 +96,8 @@ function showHand(hand, divClass){
             card.appendChild(cardFront);
             let imageURL = hand[i].image;
             cardImage.setAttribute('src', `/static/img/cards/${imageURL}`);
-            if (divClass === 'dealer-card' && i === 1) {
-                cardFront.appendChild(backImage);
-                cardBack.appendChild(cardImage);
-            } else {
-                cardFront.appendChild(cardImage);
-                cardBack.appendChild(backImage);
-            }
+            cardFront.appendChild(cardImage);
+            cardBack.appendChild(backImage);
             deck.appendChild(card);
     }
 }
@@ -120,10 +115,11 @@ function countValue(hand){
     return value;
 }
 
-function checkNatural(hand, player) {
+async function checkNatural(hand, player) {
     let chips = parseInt(sessionStorage.getItem("chips"));
     let value = countValue(hand);
     if (value === 21) {
+        await flipCard('even-r1', 'dealer');
         if (player === true){
             chips += (parseInt(sessionStorage.getItem('bet'))*1.5); // chips awarded for Natural only if player has it
             sessionStorage.setItem("chips", chips);
@@ -141,16 +137,16 @@ function checkNatural(hand, player) {
     return false;
 }
 
-function game(){
+async function game(){
 
     sessionStorage.setItem('double', true);
 
     let chips = parseInt(handleChips());
-    document.getElementById('chips').innerHTML = chips;
+    document.getElementById('chips').innerHTML = 'My money: '.concat(chips);
 
     let bet = getBet(chips);
     sessionStorage.setItem("bet", bet);
-    document.getElementById('bet').innerHTML = bet;
+    document.getElementById('bet').innerHTML = 'Current bet: '.concat(bet);
 
     let hitButton = document.getElementById('btn-hit');
     hitButton.addEventListener("click", hit);
@@ -178,20 +174,17 @@ function game(){
     sessionStorage["dealerHand"] = JSON.stringify(dealerCards);
     showHand(playerCards, 'player-card');
     dealerHand(dealerCards);
-    checkBust(playerCards);
+    await sleep(5700);
+    await checkBust(playerCards);
+    await checkNatural(playerCards, true);
+    await checkNatural(dealerCards, false);
 
-    if (checkNatural(dealerCards, false)){
-        showHand(dealerCards, 'dealer-card');
-    }
-    if (checkNatural(playerCards, true)){
-        showHand(dealerCards, 'dealer-card');
-    }
 
     sessionStorage.setItem("deck", JSON.stringify(deck));
 
 }
 
-function hit(event){
+async function hit(event){
     deck = JSON.parse(sessionStorage.getItem("deck"));
     hand = JSON.parse(sessionStorage.getItem("hand"));
     dealCard(deck,hand);
@@ -205,11 +198,12 @@ function hit(event){
     } else {
         parity = 'odd';
     }
-    dealCardTo(`${parity}-r${midIndex}`, 'player');
-    checkBust(hand);
+    await dealCardsTo([`${parity}-r${midIndex}`], 'player');
+    await sleep(1500);
+    await checkBust(hand);
 }
 
-function checkBust(hand) { // check if player has 2 Aces at the beginning and bust them
+async function checkBust(hand) { // check if player has 2 Aces at the beginning and bust them
     let chips = parseInt(sessionStorage.getItem("chips")); // player's money from local storage
     hand = JSON.parse(sessionStorage.getItem("hand"));
     let value = countValue(hand);
@@ -222,7 +216,7 @@ function checkBust(hand) { // check if player has 2 Aces at the beginning and bu
     else if(value > 21 && playerHasAce){
         reduceAceInHand(hand);
         hand = JSON.parse(sessionStorage.getItem("hand"));
-        checkBust(hand);
+        await checkBust(hand);
     }
 }
 
@@ -249,17 +243,25 @@ function reduceAceInHand(hand){
     return hand;
 }
 
-function stand(event){
+async function stand(event){
+    flipCard('even-r1', 'dealer');
     deck = JSON.parse(sessionStorage.getItem("deck"));
     playerCards = dealerCards = JSON.parse(sessionStorage.getItem("hand"));
     dealerCards = JSON.parse(sessionStorage.getItem("dealerHand"));
-
+    await sleep(1500);
     while (countValue(dealerCards) < 17) {
         dealCard(deck, dealerCards);
-        dealerHand(dealerCards, 3);
+        dealerHand(dealerCards);
+        let midIndex = Math.floor(dealerCards.length / 2);
+        let parity;
+        if (dealerCards.length / 2 === midIndex) {
+            parity = 'even';
+        } else {
+            parity = 'odd';
+        }
+        await dealCardsTo([`${parity}-r${midIndex}`], 'dealer');
+        await sleep(2000);
     }
-
-    showHand(dealerCards, 'dealer-card');
     evaluateHands(playerCards, dealerCards);
 
 }
@@ -280,7 +282,7 @@ function double(event){
             let double = bet*2;
             sessionStorage.setItem("bet", double);
             sessionStorage.setItem('double', false);
-            document.getElementById('bet').innerHTML = double;
+            document.getElementById('bet').innerHTML = 'Current bet: '.concat(double);
         } else {}
     }
 }

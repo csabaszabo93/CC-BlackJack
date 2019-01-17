@@ -1,15 +1,24 @@
 body {
     background-color: #3A7734 !important;
+    margin: 0;
 }
 .my-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 0;
     height: 10%;
     width: 100vw;
     background-color: #f8f9fa;
     position: absolute;
     top: 0;
+    text-align: center;
+    font-size: 3.5vmax;
 }
 footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 0;
     height: 10%;
     width: 100vw;
@@ -18,37 +27,47 @@ footer {
     bottom: 0;
 }
 .btn {
+    padding: 0 1vmax;
+    font-family: 'Arbutus', cursive;
     font-size: 2vmax !important;
 }
 img {
     height: 10vmax !important;
 }
 .centralize {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    display: flex;
+}
+footer .centralize {
+    display: inline-flex;
 }
 #btn-double, #btn-hit, #btn-split, #btn-stand, #btn-surrender {
-    margin: 0 4px;
+    color: #f8f9fa;
+    opacity: 0.7;
+    border-bottom-right-radius: 20vmax;
+    border-top-right-radius: 20vmax;
+    background-color: #9C1A1C;
+    margin: 0 1vmax;
+}
+#btn-double:hover, #btn-hit:hover, #btn-split:hover, #btn-stand:hover, #btn-surrender:hover {
+    cursor: pointer;
+    box-shadow: 0.5vmax 0.5vmax #ffab40;
 }
 #main-deck-player {
+    margin: 0 0.5vmax;
     position: absolute;
     bottom: 50%;
     z-index: -2;
     transform: translate(0,50%);
 }
 #main-deck-dealer {
+    margin: 0 0.5vmax;
     position: absolute;
     top: 50%;
     z-index: -1;
     transform: translate(0,-50%);
 }
 #main-deck-stationer {
+    margin: 0 0.5vmax;
     position: absolute;
     top: 50%;
     z-index: -3;
@@ -57,7 +76,6 @@ img {
 .deck {
     margin: 5px 0 !important;
     align-content: center;
-    border: 1px solid white;
 }
 .player-card, .dealer-card {
     position: relative;
@@ -84,31 +102,31 @@ img {
     margin: 0;
 }
 .deal-player-card {
-    -webkit-transition: 3s;
-    -moz-transition: 3s;
-    -o-transition: 3s;
-    transition: 3s;
+    -webkit-transition: 1s;
+    -moz-transition: 1s;
+    -o-transition: 1s;
+    transition: 1s;
     bottom: 10.4% !important;
     left: 0 !important;
     z-index: 2 !important;
-    animation: slide 3s forwards;
+    animation: slide 1s forwards;
 }
 @keyframes slide {
     100% { left: 50%; }
 }
 .deal-dealer-card {
-    -webkit-transition: 3s;
-    -moz-transition: 3s;
-    -o-transition: 3s;
-    transition: 3s;
+    -webkit-transition: 1s;
+    -moz-transition: 1s;
+    -o-transition: 1s;
+    transition: 1s;
     top: 10.4% !important;
     left: 0 !important;
     z-index: 2 !important;
-    animation: slide 3s forwards;
+    animation: slide 1s forwards;
 }
 .flip-card {
     position: absolute; !important;
-    transition: 0.6s !important;
+    transition: 1s !important;
     transform: scale(-1, 1) rotateY(180deg);
 }
 .flipped-card {
@@ -122,4 +140,56 @@ img {
     position: inherit;
     z-index: 2 !important;
     backface-visibility: hidden !important;
+}
+#start {
+    position: absolute;
+    top: 50%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+    font-size: 3vmax;
+    font-family: 'Arbutus', cursive;
+    font-weight: bold;
+    color: #b70101;
+}
+#rules {
+    max-width: 50%;
+    margin: 0 5vmin;
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    font-size: 1.7vmax;
+    font-family: 'Handlee', cursive;
+    color: #ffab40;
+}
+.head, .my-navbar{
+    font-family: 'Arbutus', cursive;
+    font-weight: bold;
+    color: #b70101;
+}
+
+#chips {
+    margin: 0 4vmax;
+    font-family: 'Arbutus', cursive;
+    color: #b70101;
+    font-size: 2vmax;
+}
+#bet {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-family: 'Arbutus', cursive;
+    color: #ffab40;
+    font-size: 2vmax;
+    transform: translate(-50%, -50%);
+    border: 0.2vmax solid #f8f9fa;
+    padding: 0.2vmax;
+    border-radius: 1.5vmax;
+}
+#decor-chip {
+    position: absolute;
+    top: 50%;
+    right: 0%;
+    transform: translate(0, -50%);
+    margin: 0 0.5vmax;
 }

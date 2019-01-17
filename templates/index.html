@@ -1,5 +1,22 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<a href="{{ url_for('game') }}">Start Game!</a>
+    <a id="start" href="{{ url_for('game') }}">Start Game!</a>
+    <div id="rules">
+        <div class="head">OBJECT OF THE GAME</div>
+        <p>
+            Each participant attempts to beat the dealer by getting a count as close to 21 as possible,
+            without going over 21.
+        </p>
+        <div class="head">CARD VALUES/SCORING</div>
+        <p>
+            It is up to each individual player if an ace is worth 1 or 11.
+            Face cards are 10 and any other card is its pip value.
+        </p>
+        <div class="head">BETTING</div>
+        <p>
+            Before the deal begins, each player places a bet, in chips, in front of him in the designated area.
+            Minimum and maximum limits are established on the betting, and the general limits are from $2 to $500.
+        </p>
+    </div>
 {% endblock %}

@@ -6,13 +6,13 @@
     <link rel='icon' type='image/ico' href="{{ url_for('static', filename='img/favicon.ico')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/slots.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Arbutus|Handlee" rel="stylesheet">
     {% block head %}{% endblock %}
 </head>
 <body>
-    <img id="main-deck-dealer" class="" src="{{ url_for('static', filename='img/cards/cardback.png') }}">
-    <img id="main-deck-player" class="" src="{{ url_for('static', filename='img/cards/cardback.png') }}">
-    <img id="main-deck-stationer" class="" src="{{ url_for('static', filename='img/cards/cardback.png') }}">
+    <img id="main-deck-dealer" class="hidden" src="{{ url_for('static', filename='img/cards/cardback.png') }}">
+    <img id="main-deck-player" class="hidden" src="{{ url_for('static', filename='img/cards/cardback.png') }}">
+    <img id="main-deck-stationer" class="hidden" src="{{ url_for('static', filename='img/cards/cardback.png') }}">
     <nav class="my-navbar">
         <div class="centralize">
             Tetris BlackJack Cave

@@ -4,12 +4,12 @@
     <script src="{{ url_for('static', filename='js/game.js') }}" defer></script>
 {% endblock %}
 {% block content %}
-    <div id="chips" data-amount="{{ chips }}" style="background-color: white"></div>
-    <div id="bet" data-amount="{{ bet }}" style="background-color: white"></div>
+    <div id="bet" data-amount="{{ bet }}"></div>
     <div id="dealer-deck" class="row deck">
     </div>
     <div id="player-deck" class="row deck">
     </div>
+    <img id="decor-chip" src="{{ url_for('static', filename='img/chip.png') }}">
     <footer>
         <div class="centralize">
             <div id="btn-double" class="btn btn-danger">Double</div>
@@ -17,6 +17,7 @@
             <div id="btn-hit" class="btn btn-success">Hit</div>
             <div id="btn-stand" class="btn btn-secondary">Stand</div>
             <div id="btn-surrender" class="btn btn-secondary">Surrender</div>
+            <div id="chips" data-amount="{{ chips }}"></div>
         </div>
     </footer>
 
