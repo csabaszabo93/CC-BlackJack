@@ -220,7 +220,7 @@ function surrender(event){
 function double(event){
 
     let handValue = countValue(JSON.parse(sessionStorage.getItem("hand")));
-    if (handValue > 8 && handValue < 12){
+    if (handValue > 8 && handValue < 12 && sessionStorage.getItem('double') === 'true'){
         let bet = parseInt(sessionStorage.getItem('bet'));
         if (sessionStorage.getItem('chips') >= bet*2){
             let double = bet*2;
