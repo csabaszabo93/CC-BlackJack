@@ -102,15 +102,20 @@ function game(){
 
     let bet = getBet(chips);
     localStorage.setItem("bet", bet);
+    document.getElementById('bet').innerHTML = bet;
 
     let hitButton = document.getElementById('btn-hit');
-
     hitButton.addEventListener("click", hit);
 
     let standButton = document.getElementById('btn-stand');
     standButton.addEventListener("click", stand);
+
     let surrenderButton = document.getElementById('btn-surrender');
     surrenderButton.addEventListener("click", surrender);
+
+    let doubleButton = document.getElementById('btn-double');
+    doubleButton.addEventListener("click", double);
+
     let playerCards = [];
     let dealerCards = [];
     let initDeck = fillDeck(); // fills deck with 312 cards
@@ -210,6 +215,19 @@ function surrender(event){
     location.reload();
 }
 
+function double(event){
+
+    let handValue = countValue(JSON.parse(sessionStorage.getItem("hand")));
+    if (handValue > 8 && handValue < 12){
+        let bet = parseInt(localStorage.getItem('bet'));
+        if (localStorage.getItem('chips') >= bet*2){
+            let double = bet*2;
+            localStorage.setItem("bet", double);
+            document.getElementById('bet').innerHTML = double;
+        } else {}
+    }
+}
+
 function evaluateHands(playerHand, dealerHand){
     let chips = parseInt(localStorage.getItem("chips"));
     let playerValue = countValue(playerHand);
@@ -240,8 +258,8 @@ function handleChips(){ // handles the amount of chips the player has. Initially
             if (answer){
                 localStorage.setItem("chips", 100);
             } else {
-                localStorage.removeItem('chips');
                 window.location.href='/';
+                localStorage.removeItem('chips');
             }
         }
     }
