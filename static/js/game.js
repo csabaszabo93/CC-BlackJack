@@ -97,6 +97,8 @@ function checkNatural(hand, player) {
 
 function game(){
 
+    sessionStorage.setItem('double', true);
+
     let chips = parseInt(handleChips());
     document.getElementById('chips').innerHTML = chips;
 
@@ -223,6 +225,7 @@ function double(event){
         if (sessionStorage.getItem('chips') >= bet*2){
             let double = bet*2;
             sessionStorage.setItem("bet", double);
+            sessionStorage.setItem('double', false);
             document.getElementById('bet').innerHTML = double;
         } else {}
     }
