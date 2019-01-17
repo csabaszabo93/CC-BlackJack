@@ -97,6 +97,8 @@ function checkNatural(hand, player) {
 
 function game(){
 
+    sessionStorage.setItem('double', true);
+
     let chips = parseInt(handleChips());
     document.getElementById('chips').innerHTML = chips;
 
@@ -218,11 +220,13 @@ function surrender(event){
 function double(event){
 
     let handValue = countValue(JSON.parse(sessionStorage.getItem("hand")));
-    if (handValue > 8 && handValue < 12){
+    if (handValue > 8 && handValue < 12 && sessionStorage.getItem('double') === 'true'){
+        console.log('123');
         let bet = parseInt(localStorage.getItem('bet'));
         if (localStorage.getItem('chips') >= bet*2){
             let double = bet*2;
             localStorage.setItem("bet", double);
+            sessionStorage.setItem('double', false);
             document.getElementById('bet').innerHTML = double;
         } else {}
     }
