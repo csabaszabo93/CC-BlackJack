@@ -17,26 +17,19 @@ function setDesign() {
         setTimeout(function() {
             dealCardTo("even-l1", "dealer");
         }, 8000);
+        setTimeout(function() {
+            dealCardTo("even-r1", "dealer");
+        }, 12000);
     };
-}
-function moveOut() {
-    this.childNodes[0].style.marginTop = "-70%";
-}
-function moveBack() {
-    this.childNodes[0].style.marginTop = "0";
 }
 function dealCardTo(slot, who) {
     let card = document.getElementById(`main-deck-${who}`);
     card.addEventListener('transitionend', function() {
         goBack(card, slot, who);
     });
-
     card.classList.remove("hidden");
     card.classList.add(`deal-${who}-card`);
     card.classList.add(slot);
-}
-function dealCardToDealer() {
-    this.classList.add("deal-dealer-card");
 }
 function goBack(animatedCard, slot, from) {
     let deck = document.getElementById(`${from}-deck`);
@@ -47,6 +40,8 @@ function goBack(animatedCard, slot, from) {
     animatedCard.classList.add("hidden");
     animatedCard.classList.remove(`deal-${from}-card`);
     animatedCard.classList.remove(slot);
+    console.log(slot);
     front.classList.add("flip-card");
     back.classList.add("flip-card");
+
 }

@@ -59,12 +59,16 @@ function showHand(hand, divClass){
             let card = document.createElement('div');
             let cardFront = document.createElement('div');
             let cardBack = document.createElement('div');
-            let flipper = document.createElement('div');
             let cardImage = document.createElement('img');
             let backImage = document.createElement('img');
             card.classList.add(divClass);
             card.classList.add('slot');
-            card.classList.add('hidden');
+            if (hand.length === 2 || i > hand.length - 2) {
+                card.classList.add('hidden');
+            } else {
+                cardFront.classList.add('flipped-card');
+                cardBack.classList.add('flipped-card');
+            }
             if (i === midIndex && parity === 'odd') {
                 card.classList.add(`${parity}-0`);
             } else {
@@ -169,6 +173,14 @@ function hit(event){
     hand = JSON.parse(sessionStorage.getItem("hand"));
     console.log(hand);
     showHand(hand, 'player-card');
+    let midIndex = Math.floor(hand.length / 2);
+    let parity;
+    if (hand.length / 2 === midIndex) {
+        parity = 'even';
+    } else {
+        parity = 'odd';
+    }
+    dealCardTo(`${parity}-r${midIndex}`, 'player');
     checkBust(hand);
 }
 
