@@ -4,6 +4,7 @@
     <script src="{{ url_for('static', filename='js/game.js') }}" defer></script>
 {% endblock %}
 {% block content %}
+    <div id="chips" data-amount="{{ chips }}" style="background-color: white"></div>
     <div id="dealer-deck" class="row deck">
     </div>
     <div id="player-deck" class="row deck">
